@@ -1,0 +1,171 @@
+目录
+系统概述
+
+快速开始
+
+API 参考
+
+使用示例
+
+高级功能
+
+故障排除
+
+系统概述
+S-AES (Simplified AES) 是一个简化的AES加密算法实现，支持16位数据加密，适用于教学和小型安全应用。
+
+主要特性
+16位数据加密/解密
+
+16位密钥支持
+
+多重加密模式
+
+CBC工作模式
+
+ASCII字符串加密
+
+中间相遇攻击演示
+
+组件架构
+text
+S-AES Core
+├── SAES (基础加密类)
+└── SAESExtended (扩展功能类)
+快速开始
+安装要求
+python
+# 无需额外依赖，只需Python 3.6+
+import numpy as np  # 已包含在代码中
+基础使用
+python
+from saes import SAES, SAESExtended
+
+# 创建加密器实例
+saes = SAES()
+API 参考
+SAES 类 - 基础加密功能
+构造函数
+python
+saes = SAES()
+创建S-AES加密器实例。
+
+方法
+encrypt(plaintext, key)
+功能: 加密16位明文
+参数:
+
+plaintext (int): 16位明文数据
+
+key (int): 16位加密密钥
+返回: int - 16位密文
+
+decrypt(ciphertext, key)
+功能: 解密16位密文
+参数:
+
+ciphertext (int): 16位密文数据
+
+key (int): 16位解密密钥
+返回: int - 16位明文
+
+key_expansion(key)
+功能: 密钥扩展
+参数:
+
+key (int): 16位初始密钥
+返回: list - 扩展密钥列表 [K0, K1, K2]
+
+SAESExtended 类 - 扩展功能
+构造函数
+python
+saes_ext = SAESExtended()
+创建扩展功能加密器实例。
+
+方法
+ascii_encrypt(text, key)
+功能: ASCII字符串加密
+参数:
+
+text (str): 要加密的ASCII字符串
+
+key (int): 16位加密密钥
+返回: bytes - 加密后的字节串
+
+ascii_decrypt(data, key)
+功能: ASCII字符串解密
+参数:
+
+data (bytes): 要解密的字节串
+
+key (int): 16位解密密钥
+返回: str - 解密后的ASCII字符串
+
+double_encrypt(plaintext, key)
+功能: 双重加密
+参数:
+
+plaintext (int): 16位明文
+
+key (int): 32位密钥 (K1‖K2)
+返回: int - 16位密文
+
+double_decrypt(ciphertext, key)
+功能: 双重解密
+参数:
+
+ciphertext (int): 16位密文
+
+key (int): 32位密钥 (K1‖K2)
+返回: int - 16位明文
+
+triple_encrypt(plaintext, key, mode=1)
+功能: 三重加密
+参数:
+
+plaintext (int): 16位明文
+
+key (int): 32位或48位密钥
+
+mode (int): 加密模式 (1: 32位密钥, 2: 48位密钥)
+返回: int - 16位密文
+
+triple_decrypt(ciphertext, key, mode=1)
+功能: 三重解密
+参数:
+
+ciphertext (int): 16位密文
+
+key (int): 32位或48位密钥
+
+mode (int): 解密模式 (1: 32位密钥, 2: 48位密钥)
+返回: int - 16位明文
+
+meet_in_the_middle_attack(plaintext_ciphertext_pairs)
+功能: 中间相遇攻击
+参数:
+
+plaintext_ciphertext_pairs (list): 明密文对列表 [(plaintext, ciphertext), ...]
+返回: list - 可能的密钥对列表 [(k1, k2), ...]
+
+cbc_encrypt(plaintext_blocks, key, iv)
+功能: CBC模式加密
+参数:
+
+plaintext_blocks (list): 明文块列表
+
+key (int): 16位加密密钥
+
+iv (int): 16位初始向量
+返回: list - 密文块列表
+
+cbc_decrypt(ciphertext_blocks, key, iv)
+功能: CBC模式解密
+参数:
+
+ciphertext_blocks (list): 密文块列表
+
+key (int): 16位解密密钥
+
+iv (int): 16位初始向量
+返回: list - 明文块列表
